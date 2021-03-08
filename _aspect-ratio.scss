@@ -1,0 +1,27 @@
+/// It preserves element aspect-ratio
+/// @param {number} $width The natural element width
+/// @param {number} $height The natural element height
+/// @param {number} $pseudo The pseudo element to be used
+///
+@mixin aspect-ratio($width, $height, $pseudo: 'before') {
+  @if index(('before', 'after'), $pseudo) == null {
+    $pseudo: 'before';
+  }
+
+  position: relative;
+
+  &::#{$pseudo} {
+    display: block;
+    width: 100%;
+    padding-bottom: ($height / $width) * 100%;
+    content: '';
+  }
+
+  & > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
