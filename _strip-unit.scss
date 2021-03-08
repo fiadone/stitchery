@@ -1,0 +1,11 @@
+/// It strips unit from the given value
+/// @param {number} $value The original value
+/// @return {any} The unitless value
+///
+@function strip-unit($value) {
+  @if type-of($value) == 'number' and not unitless($value) {
+    @return $value / ($value * 0 + 1);
+  }
+
+  @return $value;
+}
