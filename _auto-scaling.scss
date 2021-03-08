@@ -1,0 +1,57 @@
+@if not function-exists('strip-unit') {
+  @import './strip-unit';
+}
+
+/// It creates a responsive auto-scaling system
+/// @param {number} $naturalPhoneSize The natural phone layout width
+/// @param {number} $naturalTabletSize The natural tablet layout width
+/// @param {number} $naturalDesktopSize The natural desktop layout width
+/// @param {list} $phoneBreakpoints The list of breakpoints for which the phone layout will be scaled
+/// @param {list} $tabletBreakpoints The list of breakpoints for which the tablet layout will be scaled
+/// @param {list} $desktopBreakpoints The list of breakpoints for which the desktop layout will be scaled
+///
+@mixin auto-scaling(
+  $naturalPhoneSize: 375,
+  $naturalTabletSize: 768,
+  $naturalDesktopSize: 1440,
+  $phoneBreakpoints: (320, 360, 375, 414),
+  $tabletBreakpoints: (600, 768, 800, 962),
+  $desktopBreakpoints: (1024, 1152, 1280, 1366, 1440, 1536, 1600, 1920)
+) {
+  // generating mobile rules
+  @if type-of($naturalPhoneSize) == 'number' and type-of($phoneBreakpoints) == 'list' {
+    @each $phoneBreakpoint in $phoneBreakpoints {
+      @if unitless($phoneBreakpoint) {
+        $phoneBreakpoint: $phoneBreakpoint * 1px;
+      }
+
+      @media screen and (min-width: $phoneBreakpoint) {
+        font-size: floor(strip-unit($phoneBreakpoint) / strip-unit($naturalPhoneSize) * 100) * 1%;
+      }
+    }
+  }
+  // generating tablet rules
+  @if type-of($naturalTabletSize) == 'number' and type-of($tabletBreakpoints) == 'list' {
+    @each $tabletBreakpoint in $tabletBreakpoints {
+      @if unitless($tabletBreakpoint) {
+        $tabletBreakpoint: $tabletBreakpoint * 1px;
+      }
+
+      @media screen and (min-width: $tabletBreakpoint) {
+        font-size: floor(strip-unit($tabletBreakpoint) / strip-unit($naturalTabletSize) * 100) * 1%;
+      }
+    }
+  }
+  // generating desktop rules
+  @if type-of($naturalDesktopSize) == 'number' and type-of($desktopBreakpoints) == 'list' {
+    @each $desktopBreakpoint in $desktopBreakpoints {
+      @if unitless($desktopBreakpoint) {
+        $desktopBreakpoint: $desktopBreakpoint * 1px;
+      }
+
+      @media screen and (min-width: $desktopBreakpoint) {
+        font-size: floor(strip-unit($desktopBreakpoint) / strip-unit($naturalDesktopSize) * 100) * 1%;
+      }
+    }
+  }
+}
