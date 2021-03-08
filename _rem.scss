@@ -1,0 +1,27 @@
+/// It provides a px-to-rem conversion
+/// @param {number} $value The value to be converted
+/// @param {number} $context The conversion factor
+/// @param {number} $threshold The conversion threshold
+/// @return {number} The converted value
+///
+@function rem($value, $context: 16px, $threshold: 2px) {
+  // handling support for compound values (e.g. rem(12px 16px))
+  @if type-of($value) == 'list' {
+    $values: ();
+    @each $item in $value {
+      // ignoring strings to support ambiguous values too (e.g. rem(solid 4px black))
+      @if type-of($item) == 'string' {
+        $values: append($values, $item);
+      } @else {
+        $values: append($values, rem($item));
+      }
+    }
+    @return $values;
+  }
+  // skipping exceptions
+  @if type-of($value) != 'number' or unitless($value) or unit($value) != 'px' or $value <= $threshold {
+    @return $value;
+  }
+  // handling conversion
+  @return $value / $context * 1rem;
+}
