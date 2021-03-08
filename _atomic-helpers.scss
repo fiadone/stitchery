@@ -1,0 +1,60 @@
+$breakpoints: (
+  "sm": 768,
+  "md": 1024,
+  "lg": 1366
+) !default;
+
+/// It generates atomic css classes
+/// @param {string} $base-class The base rules class
+/// @param {map} $config The rules configuration map
+///
+@mixin atomic-helpers($base-class, $specs) {
+  $-property: map-get($specs, "property");
+  $-breakpoints: map-get($specs, "breakpoints");
+  $-value: map-get($specs, "value");
+  $-prefix: map-get($specs, "prefix");
+  // generating basic rules
+  @if type-of($-property) == "map" {
+    @each $prop-key, $prop-value in $-property {
+      $-base-class: if($prop-key == "_", $base-class, $base-class + $prop-key);
+      @include atomic-helpers($-base-class, (
+        "prefix": $-prefix,
+        "property": $prop-value,
+        "value": $-value
+      ));
+    }
+  } @else if type-of($-value) == "map" {
+    @each $mod, $value in $-value {
+      $-base-class: if($-prefix, $-prefix + "\\:" + $base-class + "-" + $mod, $base-class + "-" + $mod);
+      @include atomic-helpers($-base-class, (
+        "property": $-property,
+        "value": $value
+      ));
+    }
+  } @else {
+    #{"." + $base-class} {
+      #{$-property}: $-value;
+    }
+  }
+  // generating responsive rules
+  @if type-of($-breakpoints) == 'string' {
+    $-breakpoints: append((), $-breakpoints);
+  }
+  @if type-of($-breakpoints) == "list" {
+    @each $-key in $-breakpoints {
+      $-size: map-get($breakpoints, $-key);
+
+      @if unitless($-size) {
+        $-size: $-size * 1px;
+      }
+
+      @media screen and (min-width: $-size) {
+        @include atomic-helpers($base-class, (
+          "prefix": $-key,
+          "property": $-property,
+          "value": $-value
+        ));
+      }
+    }
+  }
+}
