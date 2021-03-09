@@ -1,4 +1,4 @@
-# @fiad/stitches
+# @fiad/stitchery
 
 A sharp collection of SCSS utilities
 
@@ -8,13 +8,13 @@ A sharp collection of SCSS utilities
 
 #### Installation
 ```
-npm i @fiad/stitches
+npm i @fiad/stitchery
 ```
 
 #### Usage
 ```scss
 /* main.scss */
-@import '@fiad/stitches';
+@import '@fiad/stitchery';
 ```
 
 
@@ -108,10 +108,9 @@ strip-unit($value)
 
 __Usage__:
 ```scss
-@function proportion($a, $b, $c) {
+$someSize: 512px;
 
-}
-
+strip-unit($someSize) // 512
 ```
 
 

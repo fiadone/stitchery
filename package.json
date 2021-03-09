@@ -1,22 +1,22 @@
 {
-  "name": "@fiad/stitches",
+  "name": "@fiad/stitchery",
   "version": "1.0.0",
   "description": "A sharp collection of SCSS utilities",
   "main": "_.scss",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fiadone/stitches.git"
+    "url": "git+https://github.com/fiadone/stitchery.git"
   },
   "keywords": [
     "scss",
     "utils"
   ],
   "author": "Andrea 'Fiad' Fiadone",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fiadone/stitches/issues"
+    "url": "https://github.com/fiadone/stitchery/issues"
   },
-  "homepage": "https://github.com/fiadone/stitches",
+  "homepage": "https://github.com/fiadone/stitchery",
   "publishConfig": {
     "access": "public"
   }
