@@ -364,3 +364,53 @@ However, if for any reason a specific application's part only is required to be 
 > ⚠️ __Notice__: since the mixin widely uses the *font-size* rule, pay attention when styling typography if you choose a "local" context approach. In this case, try to apply typographic rules as deeply as possible, avoiding parent styles inheriting.
 
 > 💡 __Tips__: since *px-to-(r)em* conversion may produce many decimal places and the auto-scaling system is based on percentage values, you may encounter some rendering issues due to subpixel division. This usually happens when dealing with odd values or trying to scale too small values. As a best practice, try to round sizes to powers of 2, expecially for horizontal dimensions (e.g. margin, padding, width, etc), and avoid to scale sizes lower than 4px, including borders.
+
+
+### grid
+
+It provides a simple grid system based on *CSS Grid*.
+
+__Definition__:
+
+```scss
+grid($columns, $gap, $breakpoints)
+```
+
+| Argument | Description | Default |
+| --- | --- | --- |
+| $columns | The grid size, i.e. the number of column subdivisions. | *12* |
+| $gap | The gap between columns and rows. | *0.5rem* |
+| $breakpoints | The breakpoints to be handled to generate responsive rules. | *("sm": 768, "md": 1024, "lg": 1366)* |
+
+__Usage__:
+
+SCSS:
+
+```scss
+@include grid();
+```
+
+HTML:
+
+```html
+<div class="row">
+  <!--
+    12 columns cells under 768px
+    6 columns cells under 1024px
+    4 columns cells under 1366px
+    3 columns cells from 1366px
+  -->
+  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
+  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
+  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
+  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
+</div>
+<div class="row">
+  <!--
+    12 columns cell under 1024px
+    10 columns cell with 1 column offset under 1366px
+    8 columns cell with 2 columns offset from 1366px
+  -->
+  <div class="col md:size-10 md:start-2 lg:size-8 lg:start-3"></div>
+</div>
+```
