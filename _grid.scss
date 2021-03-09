@@ -1,0 +1,69 @@
+/// A simple grid generator
+/// @param $columns The number of available slots in a row
+/// @param $gutter The grid gutter
+/// @param $breakpoints The list of breakpoints to be used to make the grid responsive
+///
+@mixin grid($columns: 12, $gutter: 0.5rem, $breakpoints: ("sm": 768, "md": 1024, "lg": 1366)) {
+  .row {
+    display: grid;
+    grid-template-columns: repeat($columns, minmax(0, 1fr));
+    grid-gap: $gutter * 2;
+    align-items: start;
+  }
+
+  .row--center {
+    align-items: center;
+  }
+
+  .row--bottom {
+    align-items: end;
+  }
+
+  .row--stretch {
+    align-items: stretch;
+  }
+
+  .col {
+    grid-column: span $columns;
+  }
+
+  @for $i from 1 through $columns {
+    .size-#{$i} {
+      grid-column: span $i;
+    }
+
+    @for $j from 1 through $columns {
+      .size-#{$i}.start-#{$j} {
+        grid-column: $j / span $i;
+      }
+    }
+  }
+
+  @each $key, $size in $breakpoints {
+    @media screen and (min-width: #{$size}px) {
+      @for $i from 1 through $columns {
+        @for $j from 1 through $columns {
+          .size-#{$i}.#{$key}\:start-#{$j} {
+            grid-column: $j / span $i;
+          }
+        }
+
+        .#{$key}\:size-#{$i} {
+          grid-column: span $i;
+        }
+
+        @for $j from 1 through $columns {
+          .#{$key}\:size-#{$i}.start-#{$j} {
+            grid-column: $j / span $i;
+          }
+        }
+
+        @for $j from 1 through $columns {
+          .#{$key}\:size-#{$i}.#{$key}\:start-#{$j} {
+            grid-column: $j / span $i;
+          }
+        }
+      }
+    }
+  }
+}
