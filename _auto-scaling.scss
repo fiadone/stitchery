@@ -1,6 +1,4 @@
-@if not function-exists('strip-unit') {
-  @import './strip-unit';
-}
+@import './strip-unit';
 
 /// It creates a responsive auto-scaling system
 /// @param {number} $naturalPhoneSize The natural phone layout width
