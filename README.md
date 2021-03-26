@@ -379,7 +379,7 @@ grid($columns, $gap, $breakpoints)
 | Argument | Description | Default |
 | --- | --- | --- |
 | $columns | The grid size, i.e. the number of column subdivisions. | *12* |
-| $gap | The gap between columns and rows. | *0.5rem* |
+| $gap | The gap between columns and rows. | *1rem* |
 | $breakpoints | The breakpoints to be handled to generate responsive rules. | *("sm": 768, "md": 1024, "lg": 1366)* |
 
 __Usage__:
@@ -400,10 +400,10 @@ HTML:
     4 columns cells under 1366px
     3 columns cells from 1366px
   -->
-  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
-  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
-  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
-  <div class="col sm:size-6 md:size-4 lg:size-3"></div>
+  <div class="col sm:span-6 md:span-4 lg:span-3"></div>
+  <div class="col sm:span-6 md:span-4 lg:span-3"></div>
+  <div class="col sm:span-6 md:span-4 lg:span-3"></div>
+  <div class="col sm:span-6 md:span-4 lg:span-3"></div>
 </div>
 <div class="row">
   <!--
@@ -411,6 +411,6 @@ HTML:
     10 columns cell with 1 column offset under 1366px
     8 columns cell with 2 columns offset from 1366px
   -->
-  <div class="col md:size-10 md:start-2 lg:size-8 lg:start-3"></div>
+  <div class="col md:span-10 md:start-2 lg:span-8 lg:start-3"></div>
 </div>
 ```

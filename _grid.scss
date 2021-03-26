@@ -1,67 +1,52 @@
 /// A simple grid generator
 /// @param $columns The number of available slots in a row
-/// @param $gutter The grid gutter
+/// @param $gap The grid gap
 /// @param $breakpoints The list of breakpoints to be used to make the grid responsive
 ///
-@mixin grid($columns: 12, $gutter: 0.5rem, $breakpoints: ("sm": 768, "md": 1024, "lg": 1366)) {
+@mixin grid($columns: 12, $gap: 1rem, $breakpoints: ("sm": 768, "md": 1024, "lg": 1366)) {
   .row {
     display: grid;
     grid-template-columns: repeat($columns, minmax(0, 1fr));
-    grid-gap: $gutter * 2;
-    align-items: start;
-  }
+    grid-gap: $gap;
+    position: relative;
 
-  .row--center {
-    align-items: center;
-  }
-
-  .row--bottom {
-    align-items: end;
-  }
-
-  .row--stretch {
-    align-items: stretch;
+    .row + & {
+      margin-top: $gap;
+    }
   }
 
   .col {
     grid-column: span $columns;
+    position: relative;
   }
 
   @for $i from 1 through $columns {
-    .size-#{$i} {
-      grid-column: span $i;
-    }
-
-    @for $j from 1 through $columns {
-      .size-#{$i}.start-#{$j} {
-        grid-column: $j / span $i;
-      }
+    .col.span-#{$i} {
+      grid-column: span $i / span $i;
     }
   }
 
   @each $key, $size in $breakpoints {
     @media screen and (min-width: #{$size}px) {
       @for $i from 1 through $columns {
-        @for $j from 1 through $columns {
-          .size-#{$i}.#{$key}\:start-#{$j} {
-            grid-column: $j / span $i;
-          }
+        .col.#{$key}\:span-#{$i} {
+          grid-column: span $i / span $i;
         }
+      }
+    }
+  }
 
-        .#{$key}\:size-#{$i} {
-          grid-column: span $i;
-        }
+  @for $i from 1 through $columns {
+    .col.start-#{$i} {
+      grid-column-start: $i;
+    }
+  }
 
-        @for $j from 1 through $columns {
-          .#{$key}\:size-#{$i}.start-#{$j} {
-            grid-column: $j / span $i;
-          }
-        }
-
-        @for $j from 1 through $columns {
-          .#{$key}\:size-#{$i}.#{$key}\:start-#{$j} {
-            grid-column: $j / span $i;
-          }
+  @each $key, $size in $breakpoints {
+    @media screen and (min-width: #{$size}px) {
+      @for $i from 1 through $columns {
+        .col.#{$key}\:start-#{$i} {
+          grid-column-start: $i;
         }
       }
     }
