@@ -19,7 +19,7 @@
     @return $values;
   }
   // skipping exceptions
-  @if type-of($value) != 'number' or unitless($value) or unit($value) != 'px' or $value <= $threshold {
+  @if type-of($value) != 'number' or unitless($value) or unit($value) != 'px' or abs($value) <= $threshold {
     @return $value;
   }
   // handling conversion
