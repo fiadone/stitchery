@@ -1,4 +1,6 @@
-@import './strip-unit';
+@use "sass:math";
+@use "sass:meta";
+@use 'strip-unit';
 
 /// It creates a responsive auto-scaling system
 /// @param {number} $naturalPhoneSize The natural phone layout width
@@ -17,38 +19,38 @@
   $desktopBreakpoints: (1024, 1152, 1280, 1366, 1440, 1536, 1600, 1920)
 ) {
   // generating mobile rules
-  @if type-of($naturalPhoneSize) == 'number' and type-of($phoneBreakpoints) == 'list' {
+  @if meta.type-of($naturalPhoneSize) == 'number' and meta.type-of($phoneBreakpoints) == 'list' {
     @each $phoneBreakpoint in $phoneBreakpoints {
-      @if unitless($phoneBreakpoint) {
+      @if math.is-unitless($phoneBreakpoint) {
         $phoneBreakpoint: $phoneBreakpoint * 1px;
       }
 
       @media screen and (min-width: $phoneBreakpoint) {
-        font-size: floor(strip-unit($phoneBreakpoint) / strip-unit($naturalPhoneSize) * 100) * 1%;
+        font-size: math.floor(math.div(strip-unit.strip-unit($phoneBreakpoint), strip-unit.strip-unit($naturalPhoneSize)) * 100) * 1%;
       }
     }
   }
   // generating tablet rules
-  @if type-of($naturalTabletSize) == 'number' and type-of($tabletBreakpoints) == 'list' {
+  @if meta.type-of($naturalTabletSize) == 'number' and meta.type-of($tabletBreakpoints) == 'list' {
     @each $tabletBreakpoint in $tabletBreakpoints {
-      @if unitless($tabletBreakpoint) {
+      @if math.is-unitless($tabletBreakpoint) {
         $tabletBreakpoint: $tabletBreakpoint * 1px;
       }
 
       @media screen and (min-width: $tabletBreakpoint) {
-        font-size: floor(strip-unit($tabletBreakpoint) / strip-unit($naturalTabletSize) * 100) * 1%;
+        font-size: math.floor(math.div(strip-unit.strip-unit($tabletBreakpoint), strip-unit.strip-unit($naturalTabletSize)) * 100) * 1%;
       }
     }
   }
   // generating desktop rules
-  @if type-of($naturalDesktopSize) == 'number' and type-of($desktopBreakpoints) == 'list' {
+  @if meta.type-of($naturalDesktopSize) == 'number' and meta.type-of($desktopBreakpoints) == 'list' {
     @each $desktopBreakpoint in $desktopBreakpoints {
-      @if unitless($desktopBreakpoint) {
+      @if math.is-unitless($desktopBreakpoint) {
         $desktopBreakpoint: $desktopBreakpoint * 1px;
       }
 
       @media screen and (min-width: $desktopBreakpoint) {
-        font-size: floor(strip-unit($desktopBreakpoint) / strip-unit($naturalDesktopSize) * 100) * 1%;
+        font-size: math.floor(math.div(strip-unit.strip-unit($desktopBreakpoint), strip-unit.strip-unit($naturalDesktopSize)) * 100) * 1%;
       }
     }
   }

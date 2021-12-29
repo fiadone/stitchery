@@ -1,3 +1,5 @@
+@use "sass:map";
+
 /// It deeply retrieves map values
 /// @param {map} $map The map to perform the deep search on
 /// @param {list} $keys The keys to be recursively retrieved
@@ -5,7 +7,7 @@
 ///
 @function map-get-recursive($map, $keys...) {
   @each $key in $keys {
-    $map: map-get($map, $key);
+    $map: map.get($map, $key);
   }
 
   @return $map;

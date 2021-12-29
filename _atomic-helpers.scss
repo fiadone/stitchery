@@ -1,3 +1,8 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+
 $breakpoints: (
   "sm": 768,
   "md": 1024,
@@ -9,12 +14,12 @@ $breakpoints: (
 /// @param {map} $config The rules configuration map
 ///
 @mixin atomic-helpers($base-class, $specs) {
-  $-property: map-get($specs, "property");
-  $-breakpoints: map-get($specs, "breakpoints");
-  $-value: map-get($specs, "value");
-  $-prefix: map-get($specs, "prefix");
+  $-property: map.get($specs, "property");
+  $-breakpoints: map.get($specs, "breakpoints");
+  $-value: map.get($specs, "value");
+  $-prefix: map.get($specs, "prefix");
   // generating basic rules
-  @if type-of($-property) == "map" {
+  @if meta.type-of($-property) == "map" {
     @each $prop-key, $prop-value in $-property {
       $-base-class: if($prop-key == "_", $base-class, $base-class + $prop-key);
       @include atomic-helpers($-base-class, (
@@ -23,7 +28,7 @@ $breakpoints: (
         "value": $-value
       ));
     }
-  } @else if type-of($-value) == "map" {
+  } @else if meta.type-of($-value) == "map" {
     @each $mod, $value in $-value {
       $-base-class: if($-prefix, $-prefix + "\\:" + $base-class + "-" + $mod, $base-class + "-" + $mod);
       @include atomic-helpers($-base-class, (
@@ -37,14 +42,14 @@ $breakpoints: (
     }
   }
   // generating responsive rules
-  @if type-of($-breakpoints) == 'string' {
-    $-breakpoints: append((), $-breakpoints);
+  @if meta.type-of($-breakpoints) == 'string' {
+    $-breakpoints: list.append((), $-breakpoints);
   }
-  @if type-of($-breakpoints) == "list" {
+  @if meta.type-of($-breakpoints) == "list" {
     @each $-key in $-breakpoints {
-      $-size: map-get($breakpoints, $-key);
+      $-size: map.get($breakpoints, $-key);
 
-      @if unitless($-size) {
+      @if math.is-unitless($-size) {
         $-size: $-size * 1px;
       }
 

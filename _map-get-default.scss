@@ -1,10 +1,12 @@
+@use "sass:map";
+
 /// It applies a default fallback to the map-get function
 /// @param {map} $map The target map
 /// @param {string} $key The key to be retrieved
 /// @return {any} The retrieved value (or the default one)
 ///
 @function map-get-default($map, $key, $default) {
-  $value: map-get($map, $key);
+  $value: map.get($map, $key);
 
   @if not $value {
     $value: $default;

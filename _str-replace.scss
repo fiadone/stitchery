@@ -1,3 +1,6 @@
+@use "sass:meta";
+@use "sass:string";
+
 /// It performs substring replacement
 /// @param {string} $string The original string
 /// @param {string|string[]} $search The substring to be replaced
@@ -5,14 +8,14 @@
 /// @return {string} The transformed string
 ///
 @function str-replace($string, $search, $replacement: '') {
-  @if type-of($search) == 'list' {
+  @if meta.type-of($search) == 'list' {
     @each $s in $search {
       $string: str-replace($string, $s, $replacement);
     }
   } @else {
-    $i: str-index($string, $search);
+    $i: string.index($string, $search);
     @if $i != null {
-      $string: str-slice($string, 1, $i - 1) + $replacement + str-replace(str-slice($string, $i + str-length($search)), $search, $replacement);
+      $string: string.slice($string, 1, $i - 1) + $replacement + str-replace(string.slice($string, $i + string.length($search)), $search, $replacement);
     }
   }
   @return $string;

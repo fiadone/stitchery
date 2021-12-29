@@ -1,9 +1,14 @@
+$breakpoints: (
+  "sm": 768,
+  "md": 1024,
+  "lg": 1366
+) !default;
+
 /// A simple grid generator
-/// @param $columns The number of available slots in a row
-/// @param $gap The grid gap
-/// @param $breakpoints The list of breakpoints to be used to make the grid responsive
+/// @param {number} $columns The number of available slots in a row
+/// @param {number} $gap The grid gap
 ///
-@mixin grid($columns: 12, $gap: 1rem, $breakpoints: ("sm": 768, "md": 1024, "lg": 1366)) {
+@mixin grid($columns: 12, $gap: 1rem) {
   .row {
     display: grid;
     grid-template-columns: repeat($columns, minmax(0, 1fr));

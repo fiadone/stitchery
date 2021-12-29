@@ -373,14 +373,13 @@ It provides a simple grid system based on *CSS Grid*.
 __Definition__:
 
 ```scss
-grid($columns, $gap, $breakpoints)
+grid($columns, $gap)
 ```
 
 | Argument | Description | Default |
 | --- | --- | --- |
 | $columns | The grid size, i.e. the number of column subdivisions. | *12* |
 | $gap | The gap between columns and rows. | *1rem* |
-| $breakpoints | The breakpoints to be handled to generate responsive rules. | *("sm": 768, "md": 1024, "lg": 1366)* |
 
 __Usage__:
 
@@ -414,3 +413,13 @@ HTML:
   <div class="col md:span-10 md:start-2 lg:span-8 lg:start-3"></div>
 </div>
 ```
+
+> ⚠️ __Notice__: the keys used as class prefixes for the breakpoint-targeted properties (sm, md, lg) refer to the ones defined in a global *$breakpoints* variable, that is supposed to be a map containing a key-value entry for each breakpoint handled in your project. By the way, the *grid* mixin comes along with a default value for that variable, corresponding to the following:
+>```scss
+>$breakpoints: (
+>  "sm": 768,
+>  "md": 1024,
+>  "lg": 1366
+>);
+>```
+>In order to use different breakpoint values and/or different prefixes for the generated selectors, overwrite it according to your needs.
