@@ -368,18 +368,19 @@ However, if for any reason a specific application's part only is required to be 
 
 ### grid
 
-It provides a simple grid system based on *CSS Grid*.
+It provides a simple grid system.
 
 __Definition__:
 
 ```scss
-grid($columns, $gap)
+grid($columns, $gap, $flex)
 ```
 
 | Argument | Description | Default |
 | --- | --- | --- |
 | $columns | The grid size, i.e. the number of column subdivisions. | *12* |
 | $gap | The gap between columns and rows. | *1rem* |
+| $flex | If true, the implementation will be based on *Flexbox* instead of *CSS Grid*. | *false* |
 
 __Usage__:
 

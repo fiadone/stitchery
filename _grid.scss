@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $breakpoints: (
   "sm": 768,
   "md": 1024,
@@ -7,12 +9,20 @@ $breakpoints: (
 /// A simple grid generator
 /// @param {number} $columns The number of available slots in a row
 /// @param {number} $gap The grid gap
+/// @param {bool} $flex If true, the implementation will be based on flexbox instead of grid
 ///
-@mixin grid($columns: 12, $gap: 1rem) {
+@mixin grid($columns: 12, $gap: 1rem, $flex: false) {
   .row {
-    display: grid;
-    grid-template-columns: repeat($columns, minmax(0, 1fr));
-    grid-gap: $gap;
+    @if $flex {
+      display: flex;
+      width: calc(100% + #{$gap});
+      left: math.div($gap, -2);
+    } @else {
+      display: grid;
+      grid-template-columns: repeat($columns, minmax(0, 1fr));
+      grid-gap: $gap;
+    }
+
     position: relative;
 
     .row + & {
@@ -20,14 +30,45 @@ $breakpoints: (
     }
   }
 
+  .row--center {
+    align-items: center;
+  }
+
+  .row--start {
+    @if flex {
+      align-items: flex-start;
+    } @else {
+      align-items: start;
+    }
+  }
+
+  .row--end {
+    @if flex {
+      align-items: flex-end;
+    } @else {
+      align-items: end;
+    }
+  }
+
   .col {
-    grid-column: span $columns;
+    @if $flex {
+      flex-basis: 100%;
+      padding: 0 math.div($gap, 2);
+    } @else {
+      grid-column: span $columns;
+      grid-row-start: 1;
+    }
+
     position: relative;
   }
 
   @for $i from 1 through $columns {
     .col.span-#{$i} {
-      grid-column: span $i / span $i;
+      @if $flex {
+        flex-basis: math.div($i, $columns) * 100%
+      } @else {
+        grid-column: span $i / span $i;
+      }
     }
   }
 
@@ -35,7 +76,11 @@ $breakpoints: (
     @media screen and (min-width: #{$size}px) {
       @for $i from 1 through $columns {
         .col.#{$key}\:span-#{$i} {
-          grid-column: span $i / span $i;
+          @if $flex {
+            flex-basis: math.div($i, $columns) * 100%
+          } @else {
+            grid-column: span $i / span $i;
+          }
         }
       }
     }
@@ -43,7 +88,11 @@ $breakpoints: (
 
   @for $i from 1 through $columns {
     .col.start-#{$i} {
-      grid-column-start: $i;
+      @if $flex {
+        margin-left: math.div(($i - 1), $columns) * 100%;
+      } @else {
+        grid-column-start: $i;
+      }
     }
   }
 
@@ -51,7 +100,11 @@ $breakpoints: (
     @media screen and (min-width: #{$size}px) {
       @for $i from 1 through $columns {
         .col.#{$key}\:start-#{$i} {
-          grid-column-start: $i;
+          @if $flex {
+            margin-left: math.div(($i - 1), $columns) * 100%;
+          } @else {
+            grid-column-start: $i;
+          }
         }
       }
     }
