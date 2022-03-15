@@ -1,0 +1,13 @@
+@mixin container($maxWidth: 80rem, $padding: 0) {
+  width: 100%;
+  max-width: $maxWidth;
+  padding-right: $padding;
+  padding-left: $padding;
+  position: relative;
+  margin: 0 auto;
+}
+
+@mixin off-container {
+  width: 100vw;
+  left: calc((100% - 100vw) / 2);
+}

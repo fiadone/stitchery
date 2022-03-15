@@ -366,6 +366,72 @@ However, if for any reason a specific application's part only is required to be 
 > 💡 __Tips__: since *px-to-(r)em* conversion may produce many decimal places and the auto-scaling system is based on percentage values, you may encounter some rendering issues due to subpixel division. This usually happens when dealing with odd values or trying to scale too small values. As a best practice, try to round sizes to powers of 2, expecially for horizontal dimensions (e.g. margin, padding, width, etc), and avoid to scale sizes lower than 4px, including borders.
 
 
+### container
+
+It provides a basic container styles for boxed layouts.
+
+__Definition__:
+
+```scss
+container($maxWidth, $padding)
+```
+
+| Argument | Description | Default |
+| --- | --- | --- |
+| $maxWidth | The maximum container size. | *80rem* |
+| $padding | The container horizontal padding, i.e. its lateral safe area. | *0* |
+
+__Usage__:
+
+SCSS:
+
+```scss
+.container {
+  @include container();
+}
+```
+
+HTML:
+
+```html
+<div class="container">
+  <!-- content -->
+</div>
+```
+
+
+### off-container
+
+It provides a utility to prevent inheritance of containment styles within a container, i.e. it allows you to keep the content full-width while still being wrapped by the container.
+
+__Definition__:
+
+```scss
+off-container()
+```
+
+__Usage__:
+
+SCSS:
+
+```scss
+.off-container {
+  @include off-container();
+}
+```
+
+HTML:
+
+```html
+<div class="container">
+  <!-- boxed content -->
+  <div class="off-container">
+    <!-- full-width content -->
+  </div>
+</div>
+```
+
+
 ### grid
 
 It provides a simple grid system.
